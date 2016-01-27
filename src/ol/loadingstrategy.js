@@ -35,6 +35,34 @@ ol.loadingstrategy.bbox = function(extent, resolution) {
   return [extent];
 };
 
+/**
+ * Creates a strategy function for loading features based on the view's 
+ * extent and resolution. It will preload features around the current view's 
+ * extent and will only make the source load new features if the new extent 
+ * is not contained in the last scaled extent.
+ * @param {number} ratio The ratio.
+ * @return {function(ol.Extent, number): Array.<ol.Extent>} Loading strategy.
+ * @api
+ */
+ol.looadingstrategy.bboxWithRatio = function (ratio) {
+  var lastScaledExtent = [0,0,0,0];
+  return (
+      /**
+       * @param {ol.Extent} extent Extent.
+       * @param {number} resolution Resolution.
+       * @return {Array.<ol.Extent>} Extents.
+       */
+      function(extent, resolution) {
+        if (ol.extent.containsExtent(lastScaledExtent, extent)) {
+          return [extent];
+        }
+        else {
+          lastScaledExtent = ol.extent.clone(extent);
+          ol.extent.scaleFromCenter(lastScaledExtent, ratio);
+          return [lastScaledExtent];
+        }
+      });
+};
 
 /**
  * Creates a strategy function for loading features based on a tile grid.
