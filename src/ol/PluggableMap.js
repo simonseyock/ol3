@@ -604,7 +604,7 @@ PluggableMap.prototype.getFeaturesAtPixel = function(pixel, opt_options) {
 /**
  * Detect layers that have a color value at a pixel on the viewport, and
  * execute a callback with each matching layer. Layers included in the
- * detection can be configured through `opt_layerFilter`.
+ * detection can be configured through the `layerFilter` option in `opt_options`.
  * @param {module:ol~Pixel} pixel Pixel.
  * @param {function(this: S, module:ol/layer/Layer, (Uint8ClampedArray|Uint8Array)): T} callback
  *     Layer callback. This callback will receive two arguments: first is the
@@ -633,7 +633,7 @@ PluggableMap.prototype.forEachLayerAtPixel = function(pixel, callback, opt_optio
 
 /**
  * Detect if features intersect a pixel on the viewport. Layers included in the
- * detection can be configured through `opt_layerFilter`.
+ * detection can be configured through the `layerFilter` option in `options`.
  * @param {module:ol~Pixel} pixel Pixel.
  * @param {module:ol/PluggableMap~AtPixelOptions=} opt_options Optional options.
  * @return {boolean} Is there a feature at the given pixel?
